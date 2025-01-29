@@ -1,11 +1,22 @@
 package com.meohin.meboard.entity;
 
-public class Reply {
-    private Long id;
-    
-    private String post_id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.Setter;
 
-    private String repl_author;
+@Entity
+@Getter
+@Setter
+public class Reply {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String content;
 
@@ -16,4 +27,13 @@ public class Reply {
     private String deleted_at;
 
     private String like_count;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User author;
+
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post_id;
+
 }
