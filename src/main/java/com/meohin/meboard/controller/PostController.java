@@ -24,7 +24,6 @@ public class PostController {
     @GetMapping("/list")
     public String list(Model model) {
 
-        // TODO: get post list from service
         List<Post> postList = postService.getPostList();
         model.addAttribute("postList", postList);
 
