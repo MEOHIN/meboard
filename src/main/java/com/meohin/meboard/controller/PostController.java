@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.meohin.meboard.entity.Post;
 import com.meohin.meboard.service.PostService;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 
 @Controller
@@ -33,6 +35,12 @@ public class PostController {
     @GetMapping("/write")
     public String write() {
         return "write";
+    }
+
+    @PostMapping("/write")
+    public String write(@RequestParam String title, @RequestParam String content) {
+        postService.writePost(title, content);
+        return "redirect:/post/list";
     }
 
     @GetMapping("/search")
