@@ -1,5 +1,6 @@
 package com.meohin.meboard.entity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -25,27 +26,27 @@ public class Post {
 
     private String content;
 
-    private String created_at;
+    private LocalDateTime created_at;
 
-    private String updated_at;
+    private LocalDateTime updated_at;
 
-    private String deleted_at;
+    private LocalDateTime deleted_at;
 
     private String category;
 
     private String tag;
 
-    private String view_count;
+    private Long view_count;
 
-    private String like_count;
+    private Long like_count;
 
-    private String reply_count;
+    private Long reply_count;
 
-    private String share_count;
+    private Long share_count;
 
-    private String bookmark_count;
+    private Long bookmark_count;
 
-    private String rating;
+    private int rating;
 
     
     @ManyToOne
