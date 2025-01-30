@@ -1,5 +1,6 @@
 package com.meohin.meboard.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -17,5 +18,13 @@ public class PostService {
     
     public List<Post> getPostList() {
         return postRepository.findAll();
+    }
+
+    public void writePost(String title, String content) {
+        Post post = new Post();
+        post.setTitle(title);
+        post.setContent(content);
+        post.setCreated_at(LocalDateTime.now());
+        postRepository.save(post);
     }
 }
