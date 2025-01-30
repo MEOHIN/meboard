@@ -16,16 +16,16 @@
                 </thead>
                 <tbody>
                     <tr th:each="post : ${postList}">
-                        <td th:text="${post.postNo}"></td>
+                        <td th:text="${post.id}"></td>
                         <td>
-                            <a th:href="@{'/post/view/' + ${post.postNo}}">
+                            <a th:href="@{'/post/' + ${post.id}}">
                                 <span th:text="${post.title}"></span>
                             </a>
                         </td>
-                        <td th:text="${post.writer}"></td>
-                        <td th:text="${#dates.format(post.regDate, 'yyyy-MM-dd')}"></td>
-                        <td th:text="${post.viewCnt}"></td>
-                        <td th:text="${post.likeCnt}"></td>
+                        <td th:text="${post.author.nickname}"></td>
+                        <td th:text="${post.created_at}"></td>
+                        <td th:text="${post.view_count}"></td>
+                        <td th:text="${post.like_count}"></td>
                     </tr>
             </table>
         </div>
