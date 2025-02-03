@@ -44,9 +44,16 @@ public class PostController {
     }
 
     @GetMapping("/search")
-    public String search() {
-        return "redirect:/post/list";
+    public String search(Model model, @RequestParam String keyword) {
+        System.out.println("keyword: " + keyword);
+        List<Post> postList = postService.searchPost(keyword);
+        if (postList.isEmpty()) {
+            model.addAttribute("message", "No result found.");            
+        }
+        model.addAttribute("postList", postList);
+        return "list";
     }
+    
 
     @GetMapping("/modify")
     public String modify() {

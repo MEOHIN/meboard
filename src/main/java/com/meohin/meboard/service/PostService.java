@@ -27,4 +27,8 @@ public class PostService {
         post.setCreated_at(LocalDateTime.now());
         postRepository.save(post);
     }
+
+    public List<Post> searchPost(String keyword) {
+        return postRepository.findByTitleContains(keyword);
+    }
 }
