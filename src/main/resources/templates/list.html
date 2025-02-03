@@ -5,7 +5,16 @@
         <form method="get" th:action="@{/post/write}" >
             <input type="submit" value="추가">
         </form>
+        <form method="get" th:action="@{/post/search}" >
+            <input type="text" name="keyword" placeholder="검색어를 입력하세요">
+            <input type="submit" value="검색">
+        </form>
         <div class="mainContainer">
+            <h1>게시글 목록</h1>
+            <div th:if="${postList.size() == 0}">
+                <p>게시글이 없습니다.</p>
+            </div>
+            <div th:if="${postList.size() > 0}">
             <table>
                 <thead>
                     <tr>
@@ -31,6 +40,7 @@
                         <td th:text="${post.like_count}"></td>
                     </tr>
             </table>
+            </div>
         </div>
     </div>
 </html>
