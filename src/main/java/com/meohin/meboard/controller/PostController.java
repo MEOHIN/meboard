@@ -27,6 +27,10 @@ public class PostController {
     public String list(Model model) {
 
         List<Post> postList = postService.getPostList();
+        if (postList.isEmpty()) {
+            model.addAttribute("message", "게시글이 없습니다.");
+            
+        }
         model.addAttribute("postList", postList);
 
         return "list";
@@ -48,7 +52,7 @@ public class PostController {
         System.out.println("keyword: " + keyword);
         List<Post> postList = postService.searchPost(keyword);
         if (postList.isEmpty()) {
-            model.addAttribute("message", "No result found.");            
+            model.addAttribute("message", "검색 결과가 없습니다.");            
         }
         model.addAttribute("postList", postList);
         return "list";
