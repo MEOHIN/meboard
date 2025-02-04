@@ -20,15 +20,15 @@ public class PostService {
         return postRepository.findAll();
     }
 
+    public List<Post> searchPost(String keyword) {
+        return postRepository.findByTitleContains(keyword);
+    }
+
     public void writePost(String title, String content) {
         Post post = new Post();
         post.setTitle(title);
         post.setContent(content);
         post.setCreated_at(LocalDateTime.now());
         postRepository.save(post);
-    }
-
-    public List<Post> searchPost(String keyword) {
-        return postRepository.findByTitleContains(keyword);
     }
 }
