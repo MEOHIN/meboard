@@ -1,14 +1,17 @@
 <html layout:decorate="~{layout}">
     <div layout:fragment="content" class="rootContainer">
         <div class="mainContainer">
-            <h1 th:text="${post.title}"></h1>
             <div>
-                <div>
-                    <form action="get" th:action="@{'/post/modify/' + ${post.id}}">
-                        <input type="submit" value="수정">
-                    </form>
-                    <a th:href="@{'/post/delete/' + ${post.id}}">삭제</a>
-                </div>
+                <a th:href="@{'/post/modify/' + ${post.id}}">수정</a>
+            </div>
+            <div>
+                <form method="post" th:action="@{'/post/delete/' + ${post.id}}">
+                    <input type="submit" value="삭제">
+                </form>
+            </div>
+            <h3 th:text="${post.title}"></h3>
+            <div>
+                <div th:text="${post.content}"></div>
             </div>
         </div>
     </div>
