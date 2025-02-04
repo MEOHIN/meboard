@@ -36,6 +36,17 @@ public class PostController {
         return "list";
     }
 
+    @GetMapping("/search")
+    public String search(@RequestParam String keyword, Model model) {
+        System.out.println("keyword: " + keyword);
+        List<Post> postList = postService.searchPost(keyword);
+        if (postList.isEmpty()) {
+            model.addAttribute("message", "검색 결과가 없습니다.");            
+        }
+        model.addAttribute("postList", postList);
+        return "list";
+    }
+
     @GetMapping("/write")
     public String write() {
         return "write";
@@ -46,18 +57,6 @@ public class PostController {
         postService.writePost(title, content);
         return "redirect:/post/list";
     }
-
-    @GetMapping("/search")
-    public String search(Model model, @RequestParam String keyword) {
-        System.out.println("keyword: " + keyword);
-        List<Post> postList = postService.searchPost(keyword);
-        if (postList.isEmpty()) {
-            model.addAttribute("message", "검색 결과가 없습니다.");            
-        }
-        model.addAttribute("postList", postList);
-        return "list";
-    }
-    
 
     @GetMapping("/modify")
     public String modify() {
