@@ -1,6 +1,7 @@
 package com.meohin.meboard.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
@@ -34,6 +36,16 @@ public class PostController {
         model.addAttribute("postList", postList);
 
         return "list";
+    }
+
+    @GetMapping("/{postId}")
+    public String detail(@PathVariable("postId") Long postId, Model model) {
+        Optional<Post> post = postService.getPost(postId);  // Optional<Post>은 작성자가 삭제한 순간 타사용자가 해당 글을 조회할 때 null을 반환하는 것을 방지하기 위함
+        if (!post.isPresent()) {
+            return "redirect:/post/list";
+        }
+        model.addAttribute("post", post.get());
+        return "detail";
     }
 
     @GetMapping("/search")

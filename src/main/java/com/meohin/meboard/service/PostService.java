@@ -2,6 +2,7 @@ package com.meohin.meboard.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,10 @@ public class PostService {
     
     public List<Post> getPostList() {
         return postRepository.findAll();
+    }
+
+    public Optional<Post> getPost(Long id) {
+        return postRepository.findById(id);
     }
 
     public List<Post> searchPost(String keyword) {
