@@ -9,6 +9,9 @@
                     <input type="submit" value="삭제">
                 </form>
             </div>
+            <div>
+                <a th:href="@{'/post/list'}">목록</a>
+            </div>
             <h3 th:text="${post.title}"></h3>
             <div>
                 <div th:text="${post.content}"></div>
