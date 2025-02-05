@@ -1,19 +1,25 @@
 <html layout:decorate="~{layout}">
     <div layout:fragment="content" class="rootContainer">
         <div class="mainContainer">
-            <div>
+            <div class="post-controls">
                 <a th:href="@{'/post/modify/' + ${post.id}}">수정</a>
-            </div>
-            <div>
                 <form method="post" th:action="@{'/post/delete/' + ${post.id}}">
                     <input type="submit" value="삭제">
                 </form>
-            </div>
-            <div>
                 <a th:href="@{'/post/list'}">목록</a>
             </div>
+
+            <!-- 게시판 데이터 -->
+            <div class="post-metadata">
+                <span th:text="${#temporals.format(post.created_at, 'yyyy-MM-dd HH:mm')}"></span>
+                <span th:text="'조회 ' + ${post.view_count?:0}"></span>
+                <span th:text="'추천 ' + ${post.like_count?:0}"></span>
+                <span th:text="'댓글 ' + ${post.reply_count?:0}"></span>
+            </div>
+
+            <!-- 게시글 제목/내용 -->
+            <div class="post-content">
             <h3 th:text="${post.title}"></h3>
-            <div>
                 <div th:text="${post.content}"></div>
             </div>
         </div>
