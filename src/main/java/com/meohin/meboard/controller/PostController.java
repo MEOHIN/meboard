@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.meohin.meboard.entity.Post;
+import com.meohin.meboard.entity.Reply;
 import com.meohin.meboard.service.PostService;
+import com.meohin.meboard.service.ReplyService;
 
 import org.springframework.ui.Model;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class PostController {
 
     private final PostService postService;
+    private final ReplyService replyService;
     
     @GetMapping("/list")
     public String list(Model model) {
@@ -41,10 +44,17 @@ public class PostController {
     @GetMapping("/{postId}")
     public String detail(@PathVariable("postId") Long postId, Model model) {
         Optional<Post> post = postService.getPost(postId);  // Optional<Post>은 작성자가 삭제한 순간 타사용자가 해당 글을 조회할 때 null을 반환하는 것을 방지하기 위함
+        Optional<Reply> reply = replyService.getReplyList(postId);
+
         if (!post.isPresent()) {
             return "redirect:/post/list";
         }
+
         model.addAttribute("post", post.get());
+        if (reply.isPresent()) {
+            model.addAttribute("replyList", reply.get());
+        }
+
         return "detail";
     }
 
