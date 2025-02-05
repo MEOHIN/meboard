@@ -19,8 +19,45 @@
 
             <!-- 게시글 제목/내용 -->
             <div class="post-content">
-            <h3 th:text="${post.title}"></h3>
+                <h3 th:text="${post.title}"></h3>
                 <div th:text="${post.content}"></div>
+            </div>
+
+            <!-- 댓글 추천/공유 -->
+            <div class="post-actions">
+                <a th:href="@{'/post/' + ${post.id} + '/like'}">추천</a>
+                <a th:href="@{'/post/' + ${post.id} + '/share'}">공유</a>
+            </div>
+
+            <!-- 댓글 폼 -->
+            <div class="reply-form">
+                <form method="post" th:action="@{'/post/' + ${post.id} + '/reply'}" >
+                    <input type="text" name="content" placeholder="댓글을 입력하세요" />
+                    <input type="submit" value="댓글 작성">
+                </form>
+            </div>
+
+            <!-- 댓글 목록 -->
+            <div class="reply-list">
+                <div th:each="reply : ${replyList}" class="reply-item">
+                    <div class="reply-content">
+                        <span th:text="${reply.author?.nickname}" class="author"></span>
+                        <span th:text="${reply.content}"></span>
+                        <span th:text="${#temporals.format(reply.created_at, 'yyyy-MM-dd HH:mm')}" class="date"></span>
+                    </div>
+                    
+                    <div class="reply-actions">
+                        <form method="post" th:action="@{'/post/' + ${post.id} + '/reply/' + ${reply.id} + '/like'}">
+                            <button type="submit">추천</button>
+                            <span th:text="${reply.like_count}"></span>
+                        </form>
+                        
+                        <a th:href="@{'/post/' + ${post.id} + '/reply/' + ${reply.id} + '/modify'}">수정</a>
+                        <form method="post" th:action="@{'/post/' + ${post.id} + '/reply/' + ${reply.id} + '/delete'}">
+                            <button type="submit">삭제</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
