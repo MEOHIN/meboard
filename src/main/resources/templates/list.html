@@ -4,15 +4,15 @@
     <div layout:fragment="content" class="rootContainer">
         <div>
             <a th:href="@{/post/write}">글쓰기</a>
-            </div>
+        </div>
         <div>
-        <form method="get" th:action="@{/post/search}" >
-            <input type="text" name="keyword" placeholder="검색어를 입력하세요">
-            <input type="submit" value="검색">
-        </form>
-</div>
+            <form method="get" th:action="@{/post/search}" >
+                <input type="text" name="keyword" placeholder="검색어를 입력하세요">
+                <input type="submit" value="검색">
+            </form>
+        </div>
         <div class="mainContainer">
-                        <div th:if="${message} != null">
+            <div th:if="${message} != null">
                 <span th:text="${message}">
             </div>
             <div th:if="${message} == null">
@@ -36,9 +36,9 @@
                             </a>
                         </td>
                         <td th:text="${post.author.nickname}"></td>
-                        <td th:text="${post.created_at}"></td>
-                        <td th:text="${post.view_count}"></td>
-                        <td th:text="${post.like_count}"></td>
+                        <td th:text="${post.createdAt}"></td>
+                        <td th:text="${post.viewCount}"></td>
+                        <td th:text="${post.likeCount}"></td>
                     </tr>
             </table>
             </div>
