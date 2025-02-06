@@ -44,16 +44,14 @@ public class PostController {
     @GetMapping("/{postId}")
     public String detail(@PathVariable("postId") Long postId, Model model) {
         Optional<Post> post = postService.getPost(postId);  // Optional<Post>은 작성자가 삭제한 순간 타사용자가 해당 글을 조회할 때 null을 반환하는 것을 방지하기 위함
-        Optional<Reply> reply = replyService.getReplyList(postId);
+        List<Reply> replyList = replyService.getReplyList(postId);
 
         if (!post.isPresent()) {
             return "redirect:/post/list";
         }
 
         model.addAttribute("post", post.get());
-        if (reply.isPresent()) {
-            model.addAttribute("replyList", reply.get());
-        }
+        model.addAttribute("replyList", replyList);
 
         return "detail";
     }
