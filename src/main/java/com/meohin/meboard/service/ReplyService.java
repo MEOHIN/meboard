@@ -9,6 +9,7 @@ import com.meohin.meboard.entity.Post;
 import com.meohin.meboard.entity.Reply;
 import com.meohin.meboard.repository.ReplyRepository;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -47,7 +48,12 @@ public class ReplyService {
     }
 
     public void likeReply(Long replyId) {
-        // TODO Auto-generated method stub
+        Reply reply = replyRepository.findById(replyId)
+                .orElseThrow(() -> new EntityNotFoundException("댓글이 존재하지 않습니다."));
+
+        reply.setLikeCount(reply.getLikeCount() + 1);
+        
+        replyRepository.save(reply);
     }
 
     
