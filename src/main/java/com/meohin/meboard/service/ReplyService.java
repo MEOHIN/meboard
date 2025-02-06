@@ -1,6 +1,6 @@
 package com.meohin.meboard.service;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -15,8 +15,8 @@ public class ReplyService {
 
     private final ReplyRepository replyRepository;
 
-    public Optional<Reply> getReplyList(Long postId) {
-        return replyRepository.findById(postId);
+    public List<Reply> getReplyList(Long postId) {
+        return replyRepository.findByPostId(postId);
     }
 
     public void writeReply(Long postId, String content) {
