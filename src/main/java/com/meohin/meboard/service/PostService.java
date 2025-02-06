@@ -33,7 +33,7 @@ public class PostService {
         Post post = new Post();
         post.setTitle(title);
         post.setContent(content);
-        post.setCreated_at(LocalDateTime.now());
+        post.setCreatedAt(LocalDateTime.now());
         postRepository.save(post);
     }
 }
