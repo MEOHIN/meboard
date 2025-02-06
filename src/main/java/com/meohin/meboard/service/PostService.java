@@ -34,6 +34,12 @@ public class PostService {
         post.setTitle(title);
         post.setContent(content);
         post.setCreatedAt(LocalDateTime.now());
+        post.setViewCount(0);
+        post.setLikeCount(0);
+        post.setReplyCount(0);
+        post.setShareCount(0);
+        post.setBookmarkCount(0);
+
         postRepository.save(post);
     }
 }
