@@ -1,9 +1,11 @@
 package com.meohin.meboard.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.meohin.meboard.entity.Post;
 import com.meohin.meboard.entity.Reply;
 import com.meohin.meboard.repository.ReplyRepository;
 
@@ -20,7 +22,16 @@ public class ReplyService {
     }
 
     public void writeReply(Long postId, String content) {
-        // TODO Auto-generated method stub
+        Post post = new Post();
+        post.setId(postId);
+
+        Reply reply = new Reply();
+        reply.setPost(post);
+        reply.setContent(content);
+        reply.setCreatedAt(LocalDateTime.now());
+        reply.setLikeCount(0);
+
+        replyRepository.save(reply);
     }
 
     public void writeNestedReply(Long postId, Long replyId, String content) {
