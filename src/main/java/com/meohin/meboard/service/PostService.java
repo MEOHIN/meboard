@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.meohin.meboard.entity.Post;
 import com.meohin.meboard.repository.PostRepository;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -45,5 +46,13 @@ public class PostService {
 
     public void deletePost(Long id) {
         postRepository.deleteById(id);  
+    }
+
+    public void likePost(Long postId) {
+        Post post = postRepository.findById(postId).orElseThrow(() -> new EntityNotFoundException("게시글이 존재하지 않습니다."));
+
+        post.setLikeCount(post.getLikeCount()+1);
+
+        postRepository.save(post);
     }
 }

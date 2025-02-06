@@ -89,8 +89,9 @@ public class PostController {
         return "redirect:/post/list";
     }
 
-    @GetMapping("/like")
-    public String like() {
+    @PostMapping("/{postId}/like")
+    public String like(@PathVariable("postId") Long postId) {
+        postService.likePost(postId);
         return "redirect:/post/id";
     }
 
