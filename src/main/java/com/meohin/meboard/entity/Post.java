@@ -3,6 +3,7 @@ package com.meohin.meboard.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,25 +27,33 @@ public class Post {
 
     private String content;
 
-    private LocalDateTime created_at;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-    private LocalDateTime updated_at;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
-    private LocalDateTime deleted_at;
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
 
     private String category;
 
     private String tag;
 
-    private Long view_count;
+    @Column(name = "view_count", columnDefinition = "integer default 0")
+    private int viewCount;
 
-    private Long like_count;
+    @Column(name = "like_count", columnDefinition = "integer default 0")
+    private int likeCount;
 
-    private Long reply_count;
+    @Column(name = "reply_count", columnDefinition = "integer default 0")
+    private int replyCount;
 
-    private Long share_count;
+    @Column(name = "share_count", columnDefinition = "integer default 0")
+    private int shareCount;
 
-    private Long bookmark_count;
+    @Column(name = "bookmark_count", columnDefinition = "integer default 0")
+    private int bookmarkCount;
 
     private int rating;
 
@@ -53,6 +62,6 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User author;
 
-    @OneToMany(mappedBy = "post_id")
+    @OneToMany(mappedBy = "post")
     private List<Reply> replies;
 }
