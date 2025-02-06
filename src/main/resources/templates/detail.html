@@ -11,10 +11,10 @@
 
             <!-- 게시판 데이터 -->
             <div class="post-metadata">
-                <span th:text="${#temporals.format(post.created_at, 'yyyy-MM-dd HH:mm')}"></span>
-                <span th:text="'조회 ' + ${post.view_count?:0}"></span>
-                <span th:text="'추천 ' + ${post.like_count?:0}"></span>
-                <span th:text="'댓글 ' + ${post.reply_count?:0}"></span>
+                <span th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
+                <span th:text="'조회 ' + ${post.viewCount?:0}"></span>
+                <span th:text="'추천 ' + ${post.likeCount?:0}"></span>
+                <span th:text="'댓글 ' + ${post.replyCount?:0}"></span>
             </div>
 
             <!-- 게시글 제목/내용 -->
@@ -33,7 +33,7 @@
             <div class="reply-form">
                 <form method="post" th:action="@{'/post/' + ${post.id} + '/reply'}" >
                     <input type="text" name="content" placeholder="댓글을 입력하세요" />
-                    <input type="submit" value="댓글 작성">
+                    <input type="submit" value="등록">
                 </form>
             </div>
 
@@ -43,13 +43,13 @@
                     <div class="reply-content">
                         <span th:text="${reply.author?.nickname}" class="author"></span>
                         <span th:text="${reply.content}"></span>
-                        <span th:text="${#temporals.format(reply.created_at, 'yyyy-MM-dd HH:mm')}" class="date"></span>
+                        <span th:text="${#temporals.format(reply.createdAt, 'yyyy-MM-dd HH:mm')}" class="date"></span>
                     </div>
                     
                     <div class="reply-actions">
                         <form method="post" th:action="@{'/post/' + ${post.id} + '/reply/' + ${reply.id} + '/like'}">
                             <button type="submit">추천</button>
-                            <span th:text="${reply.like_count}"></span>
+                            <span th:text="${reply.likeCount}"></span>
                         </form>
                         
                         <a th:href="@{'/post/' + ${post.id} + '/reply/' + ${reply.id} + '/modify'}">수정</a>
