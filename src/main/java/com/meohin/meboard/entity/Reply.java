@@ -1,5 +1,8 @@
 package com.meohin.meboard.entity;
 
+import java.time.LocalDateTime;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,13 +23,17 @@ public class Reply {
 
     private String content;
 
-    private String created_at;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-    private String updated_at;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
-    private String deleted_at;
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
 
-    private String like_count;
+    @Column(name = "like_count", columnDefinition = "integer default 0")
+    private int likeCount;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -34,6 +41,5 @@ public class Reply {
 
     @ManyToOne
     @JoinColumn(name = "post_id")
-    private Post post_id;
-
+    private Post post;
 }
