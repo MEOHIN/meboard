@@ -33,9 +33,9 @@ class MeboardApplicationTests {
 		post.setContent("This is a test post.");
 		post.setCategory("test");
 		post.setTag("test");
-		post.setCreated_at(LocalDateTime.now());
-		post.setView_count(1L);
-		post.setLike_count(1L);
+		post.setCreatedAt(LocalDateTime.now());
+		post.setViewCount(1);
+		post.setLikeCount(1);
 		postRepository.save(post);
 
 		// 두 번째 사용자 저장
@@ -50,9 +50,9 @@ class MeboardApplicationTests {
 		post2.setContent("This is a test post 2.");
 		post2.setCategory("test");
 		post2.setTag("test");
-		post2.setCreated_at(LocalDateTime.now());
-		post2.setView_count(2L);
-		post2.setLike_count(2L);
+		post2.setCreatedAt(LocalDateTime.now());
+		post2.setViewCount(2);
+		post2.setLikeCount(2);
 		postRepository.save(post2);
 
 		// 세 번째 사용자 저장
@@ -67,9 +67,9 @@ class MeboardApplicationTests {
 		post3.setContent("This is a test post 3.");
 		post3.setCategory("test");
 		post3.setTag("test");
-		post3.setCreated_at(LocalDateTime.now());
-		post3.setView_count(3L);
-		post3.setLike_count(3L);
+		post3.setCreatedAt(LocalDateTime.now());
+		post3.setViewCount(3);
+		post3.setLikeCount(3);
 		postRepository.save(post3);
 	}
 }
