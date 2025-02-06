@@ -2,6 +2,7 @@ package com.meohin.meboard.entity;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,7 +15,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class User {
-    
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,15 +26,14 @@ public class User {
 
     private String nickname;
 
-    private String created_at;
+    @Column(name = "created_at")
+    private String createdAt;
 
-    private String updated_at;
+    @Column(name = "updated_at")
+    private String updatedAt;
 
-    private String deleted_at;
-
-    private String like_count;
-
-    private String bookmark_count;
+    @Column(name = "deleted_at")
+    private String deletedAt;
 
     @OneToMany(mappedBy = "author")
     private List<Post> posts;
