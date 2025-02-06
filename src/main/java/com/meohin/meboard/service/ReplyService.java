@@ -43,7 +43,7 @@ public class ReplyService {
     }
 
     public void deleteReply(Long replyId) {
-        // TODO Auto-generated method stub
+        replyRepository.deleteById(replyId);
     }
 
     public void likeReply(Long replyId) {
