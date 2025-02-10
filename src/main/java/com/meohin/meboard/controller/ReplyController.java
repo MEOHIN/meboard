@@ -19,37 +19,37 @@ public class ReplyController {
 
     @PostMapping
     public String writeReply(@PathVariable Long postId,
-                       @RequestParam String content) {
+                            @RequestParam String content) {
         replyService.writeReply(postId, content);
         return "redirect:/post/" + postId;
     }
     
     @PostMapping("/{replyId}/reply")
     public String writeNestedReply(@PathVariable Long postId,
-                                 @PathVariable Long replyId,
-                                 @RequestParam String content) {
+                                @PathVariable Long replyId,
+                                @RequestParam String content) {
         replyService.writeNestedReply(postId, replyId, content);
         return "redirect:/post/" + postId;
     }
 
     @PostMapping("/{replyId}/modify")
     public String modifyReply(@PathVariable Long postId,
-                        @PathVariable Long replyId,
-                        @RequestParam String content) {
+                            @PathVariable Long replyId,
+                            @RequestParam String content) {
         replyService.modifyReply(replyId, content);
         return "redirect:/post/" + postId;
     }
 
     @PostMapping("/{replyId}/delete")
     public String deleteReply(@PathVariable Long postId,
-                        @PathVariable Long replyId) {
+                            @PathVariable Long replyId) {
         replyService.deleteReply(replyId);
         return "redirect:/post/" + postId;
     }
 
     @PostMapping("/{replyId}/like")
     public String likeReply(@PathVariable Long postId,
-                      @PathVariable Long replyId) {
+                            @PathVariable Long replyId) {
         replyService.likeReply(replyId);
         return "redirect:/post/" + postId;
     }
