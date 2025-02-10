@@ -44,6 +44,15 @@ public class PostService {
         postRepository.save(post);
     }
 
+    public void modifyPost(Long postId, String title, String content) {
+        Post post = postRepository.findById(postId).orElseThrow(() -> new EntityNotFoundException("게시글이 존재하지 않습니다."));
+        post.setTitle(title);
+        post.setContent(content);
+        post.setUpdatedAt(LocalDateTime.now());
+
+        postRepository.save(post);
+    }
+
     public void deletePost(Long id) {
         postRepository.deleteById(id);  
     }
