@@ -78,9 +78,17 @@ public class PostController {
         return "redirect:/post/list";
     }
 
-    @GetMapping("/modify")
+    @GetMapping("/{postId}/modify")
     public String modify() {
-        return "redirect:/post/id";
+        return "write";
+    }
+
+    @PostMapping("/{postId}/modify")
+    public String modify(@PathVariable("postId") Long postId, 
+                        @RequestParam String title, 
+                        @RequestParam String content) {
+        postService.modifyPost(postId, title, content);
+        return "redirect:/post/" + postId;
     }
 
     @PostMapping("/{postId}/delete")
