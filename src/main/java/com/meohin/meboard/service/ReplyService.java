@@ -40,7 +40,11 @@ public class ReplyService {
     }
 
     public void modifyReply(Long replyId, String content) {
-        // TODO Auto-generated method stub
+        Reply reply = replyRepository.findById(replyId).orElseThrow(() -> new EntityNotFoundException("댓글이 존재하지 않습니다."));
+        reply.setContent(content);
+        reply.setUpdatedAt(LocalDateTime.now());
+
+        replyRepository.save(reply);
     }
 
     public void deleteReply(Long replyId) {
