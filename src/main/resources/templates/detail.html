@@ -2,8 +2,8 @@
     <div layout:fragment="content" class="rootContainer">
         <div class="mainContainer">
             <div class="post-controls">
-                <a th:href="@{'/post/modify/' + ${post.id}}">수정</a>
-                <form method="post" th:action="@{'/post/delete/' + ${post.id}}">
+                <a th:href="@{'/post/' + ${post.id} + '/modify'}">수정</a>
+                <form method="post" th:action="@{'/post/' + ${post.id} + '/delete'}">
                     <input type="submit" value="삭제">
                 </form>
                 <a th:href="@{'/post/list'}">목록</a>
