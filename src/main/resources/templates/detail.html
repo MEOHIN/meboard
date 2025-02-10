@@ -29,11 +29,20 @@
                 <a th:href="@{'/post/' + ${post.id} + '/share'}">공유</a>
             </div>
 
-            <!-- 댓글 폼 -->
+            <!-- 댓글 폼 (작성용) -->
             <div class="reply-form">
                 <form method="post" th:action="@{'/post/' + ${post.id} + '/reply'}" >
                     <input type="text" name="content" placeholder="댓글을 입력하세요" />
                     <input type="submit" value="등록">
+                </form>
+            </div>
+
+            <!-- 댓글 폼 (수정용) -->
+            <div class="reply-form">
+                <form method="post" th:action="@{'/post/' + ${post.id} + '/reply/' + ${reply.id} + '/modify'}">
+                    <!-- 수정하려는 댓글의 기존 내용을 폼에 미리 채웁니다 -->
+                    <input type="text" name="content" th:value="${reply.content}" placeholder="댓글을 수정하세요" />
+                    <input type="submit" value="수정">
                 </form>
             </div>
 
