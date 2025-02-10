@@ -53,8 +53,13 @@ public class PostService {
         postRepository.save(post);
     }
 
-    public void deletePost(Long id) {
-        postRepository.deleteById(id);  
+    public void deletePost(Long postId) {
+        Post post = postRepository.findById(postId).orElseThrow(() -> new EntityNotFoundException("게시글이 존재하지 않습니다."));
+        post.setDeletedAt(LocalDateTime.now());
+
+        postRepository.save(post);
+        
+        postRepository.deleteById(postId);  
     }
 
     public void likePost(Long postId) {
