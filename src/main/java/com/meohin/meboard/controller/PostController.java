@@ -57,7 +57,7 @@ public class PostController {
     }
 
     @GetMapping("/search")
-    public String search(@RequestParam String keyword, Model model) {
+    public String searchPost(@RequestParam String keyword, Model model) {
         System.out.println("keyword: " + keyword);
         List<Post> postList = postService.searchPost(keyword);
         if (postList.isEmpty()) {
@@ -68,23 +68,23 @@ public class PostController {
     }
 
     @GetMapping("/write")
-    public String write() {
+    public String writePost() {
         return "write";
     }
 
     @PostMapping("/write")
-    public String write(@RequestParam String title, @RequestParam String content) {
+    public String writePost(@RequestParam String title, @RequestParam String content) {
         postService.writePost(title, content);
         return "redirect:/post/list";
     }
 
     @GetMapping("/{postId}/modify")
-    public String modify() {
+    public String modifyPost() {
         return "write";
     }
 
     @PostMapping("/{postId}/modify")
-    public String modify(@PathVariable("postId") Long postId, 
+    public String modifyPost(@PathVariable("postId") Long postId, 
                         @RequestParam String title, 
                         @RequestParam String content) {
         postService.modifyPost(postId, title, content);
@@ -92,7 +92,7 @@ public class PostController {
     }
 
     @PostMapping("/{postId}/delete")
-    public String delete(@PathVariable("postId") Long postId) {
+    public String deletePost(@PathVariable("postId") Long postId) {
         postService.deletePost(postId);
         return "redirect:/post/list";
     }

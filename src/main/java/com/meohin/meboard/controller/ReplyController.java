@@ -18,7 +18,7 @@ public class ReplyController {
     private final ReplyService replyService;
 
     @PostMapping
-    public String write(@PathVariable Long postId,
+    public String writeReply(@PathVariable Long postId,
                        @RequestParam String content) {
         replyService.writeReply(postId, content);
         return "redirect:/post/" + postId;
@@ -33,7 +33,7 @@ public class ReplyController {
     }
 
     @PostMapping("/{replyId}/modify")
-    public String modify(@PathVariable Long postId,
+    public String modifyReply(@PathVariable Long postId,
                         @PathVariable Long replyId,
                         @RequestParam String content) {
         replyService.modifyReply(replyId, content);
@@ -41,14 +41,14 @@ public class ReplyController {
     }
 
     @PostMapping("/{replyId}/delete")
-    public String delete(@PathVariable Long postId,
+    public String deleteReply(@PathVariable Long postId,
                         @PathVariable Long replyId) {
         replyService.deleteReply(replyId);
         return "redirect:/post/" + postId;
     }
 
     @PostMapping("/{replyId}/like")
-    public String like(@PathVariable Long postId,
+    public String likeReply(@PathVariable Long postId,
                       @PathVariable Long replyId) {
         replyService.likeReply(replyId);
         return "redirect:/post/" + postId;
