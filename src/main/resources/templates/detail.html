@@ -37,15 +37,6 @@
                 </form>
             </div>
 
-            <!-- 댓글 폼 (수정용) -->
-            <div class="reply-form">
-                <form method="post" th:action="@{'/post/' + ${post.id} + '/reply/' + ${reply.id} + '/modify'}">
-                    <!-- 수정하려는 댓글의 기존 내용을 폼에 미리 채웁니다 -->
-                    <input type="text" name="content" th:value="${reply.content}" placeholder="댓글을 수정하세요" />
-                    <input type="submit" value="수정">
-                </form>
-            </div>
-
             <!-- 댓글 목록 -->
             <div class="reply-list">
                 <div th:each="reply : ${replyList}" class="reply-item">
@@ -53,6 +44,15 @@
                         <span th:text="${reply.author?.nickname}" class="author"></span>
                         <span th:text="${reply.content}"></span>
                         <span th:text="${#temporals.format(reply.createdAt, 'yyyy-MM-dd HH:mm')}" class="date"></span>
+                    </div>
+                    
+                    <!-- 댓글 폼 (수정용) -->
+                    <div class="reply-form">
+                        <form method="post" th:action="@{'/post/' + ${post.id} + '/reply/' + ${reply.id} + '/modify'}">
+                            <!-- 수정하려는 댓글의 기존 내용을 폼에 미리 채웁니다 -->
+                            <input type="text" name="content" th:value="${reply.content}" placeholder="댓글을 수정하세요" />
+                            <input type="submit" value="수정">
+                        </form>
                     </div>
                     
                     <div class="reply-actions">
