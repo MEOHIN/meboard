@@ -28,7 +28,7 @@ public class ReplyController {
     public String writeNestedReply(@PathVariable Long postId,
                                 @PathVariable Long replyId,
                                 @RequestParam String content) {
-        replyService.writeNestedReply(postId, replyId, content);
+        replyService.writeNestedReply(replyId, content);
         return "redirect:/post/" + postId;
     }
 
