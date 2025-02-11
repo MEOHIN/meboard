@@ -30,7 +30,6 @@ public class ReplyService {
         reply.setPost(post);
         reply.setContent(content);
         reply.setCreatedAt(LocalDateTime.now());
-        reply.setLikeCount(0);
 
         replyRepository.save(reply);
     }
@@ -50,16 +49,4 @@ public class ReplyService {
     public void deleteReply(Long replyId) {
         replyRepository.deleteById(replyId);
     }
-
-    public void likeReply(Long replyId) {
-        Reply reply = replyRepository.findById(replyId)
-                .orElseThrow(() -> new EntityNotFoundException("댓글이 존재하지 않습니다."));
-
-        reply.setLikeCount(reply.getLikeCount() + 1);
-        
-        replyRepository.save(reply);
-    }
-
-    
-
 }

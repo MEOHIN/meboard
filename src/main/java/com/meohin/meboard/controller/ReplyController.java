@@ -46,11 +46,4 @@ public class ReplyController {
         replyService.deleteReply(replyId);
         return "redirect:/post/" + postId;
     }
-
-    @PostMapping("/{replyId}/like")
-    public String likeReply(@PathVariable Long postId,
-                            @PathVariable Long replyId) {
-        replyService.likeReply(replyId);
-        return "redirect:/post/" + postId;
-    }
 }

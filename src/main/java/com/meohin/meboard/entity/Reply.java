@@ -37,9 +37,6 @@ public class Reply {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
-    @Column(name = "like_count", columnDefinition = "integer default 0")
-    private int likeCount;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User author;
