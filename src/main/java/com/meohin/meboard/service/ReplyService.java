@@ -34,8 +34,16 @@ public class ReplyService {
         replyRepository.save(reply);
     }
 
-    public void writeNestedReply(Long postId, Long replyId, String content) {
-        // TODO Auto-generated method stub
+    public void writeNestedReply(Long parentReplyId, String content) {
+        Reply parentReply = replyRepository.findById(parentReplyId).orElseThrow(() -> new EntityNotFoundException("댓글이 존재하지 않습니다."));
+        Reply nestedReply = new Reply();
+        nestedReply.setContent(content);
+        nestedReply.setCreatedAt(LocalDateTime.now());
+        nestedReply.setPost(parentReply.getPost());
+        nestedReply.setParent(parentReply);  // 부모-자식 관계 설정
+
+        replyRepository.save(nestedReply);
+
     }
 
     public void modifyReply(Long replyId, String content) {
