@@ -32,7 +32,7 @@
             <!-- 댓글 폼 (작성용) -->
             <div class="reply-form">
                 <form method="post" th:action="@{'/post/' + ${post.id} + '/reply'}" >
-                    <input type="text" name="content" placeholder="댓글을 입력하세요" />
+                    <textarea name="content" placeholder="댓글을 입력하세요."></textarea>
                     <input type="submit" value="등록">
                 </form>
             </div>
@@ -54,14 +54,37 @@
                             <input type="submit" value="수정">
                         </form>
                     </div>
-                    
-                    <div class="reply-actions">
-                        <form method="post" th:action="@{'/post/' + ${post.id} + '/reply/' + ${reply.id} + '/like'}">
-                            <button type="submit">추천</button>
-                            <span th:text="${reply.likeCount}"></span>
+
+                    <div class="nested-reply-form">
+                        <button type="button" class="btn-reply">답글</button>
+                        <form method="post" th:action="@{'/post/' + ${post.id} + '/reply/' + ${reply.id} + '/reply'}" class="nested-form">
+                            <textarea name="content" placeholder="답글을 입력하세요." class="reply-textarea"></textarea>
+                            <div class="form-action">
+                                <button type="button" class="btn-cancel">취소</button>
+                                <button type="submit" class="btn-submit">등록</button>
+                            </div>
                         </form>
-                        
-                        <a th:href="@{'/post/' + ${post.id} + '/reply/' + ${reply.id} + '/modify'}">수정</a>
+                    </div>
+
+                    <!-- 대댓글 목록 -->
+                    <div class="nested-reply-list" th:if="${!reply.children.empty}">
+                        <div th:each="nestedReply : ${reply.children}" class="nested-reply-item">
+                            <div class="reply-list">
+                                <span th:text="${nestedReply.author?.nickname}" class="author"></span>
+                                <span th:text="${nestedReply.content}"></span>
+                                <span th:text="${#temporals.format(nestedReply.createdAt, 'yyyy-MM-dd')}" class="date"></span>
+                            </div>
+                            <!-- 대댓글 액션 -->
+                            <div class="reply-form">
+                                <form method="post" th:action="@{'/post' + ${post.id} + '/reply' + ${nestedReply.id} + '/delete'}">
+                                    <button type="submit">삭제</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 댓글 액션 -->
+                    <div class="reply-actions">                 
                         <form method="post" th:action="@{'/post/' + ${post.id} + '/reply/' + ${reply.id} + '/delete'}">
                             <button type="submit">삭제</button>
                         </form>
