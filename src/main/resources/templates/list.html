@@ -36,7 +36,7 @@
                             </a>
                         </td>
                         <td th:text="${post.author.nickname}"></td>
-                        <td th:text="${post.createdAt}"></td>
+                        <td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
                         <td th:text="${post.viewCount}"></td>
                         <td th:text="${post.likeCount}"></td>
                     </tr>
