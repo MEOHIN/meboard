@@ -55,11 +55,7 @@ public class Post {
     @Column(name = "share_count", columnDefinition = "integer default 0")
     private int shareCount;
 
-    @Column(name = "bookmark_count", columnDefinition = "integer default 0")
-    private int bookmarkCount;
-
     private int rating;
-
     
     @ManyToOne
     @JoinColumn(name = "user_id")
