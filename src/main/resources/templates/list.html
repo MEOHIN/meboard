@@ -34,6 +34,8 @@
                             <a th:href="@{'/post/' + ${post.id}}">
                                 <span th:text="${post.title}"></span>
                             </a>
+                            <!-- 댓글 게수 표시 -->
+                            <span th:if="${#lists.size(post.replies) > 0}" th:text="'[' + ${#lists.size(post.replies)} + ']'"></span>
                         </td>
                         <td th:text="${post.author.nickname}"></td>
                         <td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
