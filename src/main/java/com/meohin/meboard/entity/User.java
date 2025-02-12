@@ -1,5 +1,6 @@
 package com.meohin.meboard.entity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -30,13 +31,13 @@ public class User {
     private String nickname;
 
     @Column(name = "created_at")
-    private String createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
-    private String updatedAt;
+    private LocalDateTime updatedAt;
 
     @Column(name = "deleted_at")
-    private String deletedAt;
+    private LocalDateTime deletedAt;
 
     @ManyToMany
     @JoinTable(
@@ -44,7 +45,7 @@ public class User {
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "post_id")
     )
-    private List<Post> likeedPosts;
+    private List<Post> likedPosts;
 
     @OneToMany(mappedBy = "author")
     private List<Post> posts;
