@@ -39,7 +39,6 @@ public class PostService {
         post.setLikeCount(0);
         post.setReplyCount(0);
         post.setShareCount(0);
-        post.setBookmarkCount(0);
 
         postRepository.save(post);
     }
