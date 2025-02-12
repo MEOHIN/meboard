@@ -7,6 +7,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,6 +37,14 @@ public class User {
 
     @Column(name = "deleted_at")
     private String deletedAt;
+
+    @ManyToMany
+    @JoinTable(
+        name = "user_like",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "post_id")
+    )
+    private List<Post> likeedPosts;
 
     @OneToMany(mappedBy = "author")
     private List<Post> posts;
