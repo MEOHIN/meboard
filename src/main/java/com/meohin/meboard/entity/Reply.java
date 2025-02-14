@@ -39,7 +39,7 @@ public class Reply {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User author;
+    private SiteUser author;
 
     @ManyToOne
     @JoinColumn(name = "post_id")
