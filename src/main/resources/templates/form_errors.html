@@ -1,0 +1,14 @@
+<div th:fragment="formErrorsFragment">
+    <!-- 1. username 관련 오류 (최우선) -->
+    <div class="red-text" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+    
+    <!-- 2. nickname 관련 오류 -->
+    <div class="red-text" th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}"></div>
+    
+    <!-- 3. password 관련 오류 -->
+    <div class="red-text" th:if="${#fields.hasErrors('password1')}" th:errors="*{password1}"></div>
+    <div class="red-text" th:if="${#fields.hasErrors('password2')}" th:errors="*{password2}"></div>
+    
+    <!-- 4. 그 외 글로벌 오류 -->
+    <div class="red-text" th:if="${#fields.hasGlobalErrors()}" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
+</div>
