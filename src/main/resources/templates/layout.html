@@ -10,18 +10,26 @@
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
 </head>
 
 <body>
     <!-- 네비게이션 -->
     <nav class="nav-extended">
         <div class="nav-wrapper">
-            <a th:href="@{'/'}" class="brand-logo center">MEBOARD</a>
+            <a th:href="@{/}" class="brand-logo center">MEBOARD</a>
             <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-              <li><a th:href="@{'/'}">홈</a></li>
+              <li><a th:href="@{/}">홈</a></li>
               <li><a href="#마이페이지">마이페이지</a></li>
-              <li><a href="#로그인아웃">로그인아웃</a></li>
+              <li><a th:href="@{/user/register}">회원가입</a></li>
+              <li>
+                <a sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
+                <a sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
+              </li>
+
             </ul>
           </div>
           <div class="nav-content">
@@ -35,17 +43,29 @@
         </nav>
       
         <ul class="sidenav" id="mobile-demo">
-          <li><a th:href="@{'/'}">홈</a></li>
+          <li><a th:href="@{/}">홈</a></li>
           <li><a href="#마이페이지">마이페이지</a></li>
-          <li><a href="#로그인아웃">로그인아웃</a></li>
+          <li>
+            <a sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
+            <a sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
+          </li>
+          <li><a th:href="@{/user/register}">회원가입</a></li>
         </ul>
     </nav>
+
     <!-- 기본 템플릿 안에 삽입될 내용 시작 -->
     <th:block layout:fragment="content"></th:block>
     <!-- 기본 템플릿 안에 삽입될 내용 종료 -->
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- Initialize Materialize Components -->
+    <script>
+      $(document).ready(function(){
+          $('.sidenav').sidenav();
+      });
+    </script>
             
 </body>
 </html>
