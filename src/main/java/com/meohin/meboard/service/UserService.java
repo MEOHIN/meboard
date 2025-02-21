@@ -28,6 +28,7 @@ public class UserService {
         }
     }
 
+    // 회원가입
     public SiteUser register(String username, String nickname, String password) {
         // 1. 이메일 중복 검사 (옵션)
         if (userRepository.existsByUsername(username)) {
@@ -58,5 +59,32 @@ public class UserService {
     // 닉네임 중복 여부 확인
     public boolean isNicknameTaken(String nickname) {
         return userRepository.existsByNickname(nickname);
+    }
+
+    // 회원정보 수정
+    // 1. 닉네임만 수정
+    public SiteUser modifyNickname(String username, String nickname) {
+        SiteUser user = getUser(username);
+        
+        // 현재 사용자의 닉네임과 같다면 중복 검사 건너뛰기
+        if (!user.getNickname().equals(nickname) && userRepository.existsByNickname(nickname)) {
+            throw new IllegalArgumentException("이미 사용 중인 닉네임입니다.");
+        }
+
+        user.setNickname(nickname);
+        return userRepository.save(user);
+    }
+
+    // 2. 비밀번호만 수정
+    public SiteUser modifyPassword(String username, String currentPassword, String newPassword) {
+        SiteUser user = getUser(username);
+        
+        // 현재 비밀번호 확인
+        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
+            throw new IllegalArgumentException("현재 비밀번호가 일치하지 않습니다.");
+        }
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        return userRepository.save(user);
     }
 }
