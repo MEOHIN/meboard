@@ -1,10 +1,13 @@
 package com.meohin.meboard.controller;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.meohin.meboard.service.UserService;
 import com.meohin.meboard.vo.UserVO;
@@ -84,10 +87,55 @@ public class UserController {
     
     // 회원정보
     @GetMapping("/mypage")
-    public String mypage() {
+    public String mypage(UserVO userVO) {
         return "mypage";
     }
 
+    // 회원정보 수정
+    @PostMapping("/mypage")
+    public String mypage(@Valid UserVO userVO, BindingResult bindingResult, 
+                        @RequestParam("action") String action,
+                        @AuthenticationPrincipal UserDetails userDetails) {
+        
+        if (bindingResult.hasErrors()) {
+            return "mypage";
+        }
+
+        try {
+            switch (action) {
+                // 닉네임 수정 로직
+                case "updateNickname":
+                    userService.modifyNickname(userDetails.getUsername(), userVO.getNickname());
+                    break;
+
+                // 비밀번호 수정 로직
+                case "updatePassword":
+                    // 비밀번호 일치여부 검사
+                    if (!userVO.getPassword1().equals(userVO.getPassword2())) {
+                        bindingResult.rejectValue("password2", "passwordInCorrect", 
+                            "새 비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+                        return "mypage";
+                    }
+                    
+                    userService.modifyPassword(
+                        userDetails.getUsername(), 
+                        userVO.getCurrentPassword(), 
+                        userVO.getPassword1()
+                    );
+                    break;
+
+                default:
+                    throw new IllegalArgumentException("잘못된 요청입니다.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            bindingResult.reject("modificationFailed", e.getMessage());
+            return "mypage";
+        }
+
+        return "redirect:/user/mypage";
+    }
+    
     // 프로필
     @GetMapping("/profile")
     public String profile() {
@@ -97,17 +145,6 @@ public class UserController {
     @PostMapping("/profile")
     public String profile(Model model) {
         return "redirect:/user/profile";
-    }
-    
-    // 회원정보 수정
-    @GetMapping("/modify")
-    public String modify() {
-        return "modify";
-    }
-
-    @PostMapping("/modify")
-    public String modify(Model model) {
-        return "redirect:/user/modify";
     }
 
     // 회원탈퇴
