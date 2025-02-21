@@ -13,6 +13,9 @@ public class UserVO {
     @NotEmpty(message = "아이디는 필수 입력 항목입니다.")
     private String username;
 
+    // 현재 비밀번호
+    private String currentPassword;
+
     @Pattern(
         regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!@#$%^&*()_-])[a-zA-Z0-9!@#$%^&*()_-]{8,16}$", 
         message = "비밀번호는 8~16자의 영문 대/소문자, 숫자, 특수문자를 모두 포함해야 합니다."
