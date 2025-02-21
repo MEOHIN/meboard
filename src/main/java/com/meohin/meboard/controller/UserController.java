@@ -135,22 +135,16 @@ public class UserController {
 
         return "redirect:/user/mypage";
     }
-    
-    // 프로필
-    @GetMapping("/profile")
-    public String profile() {
-        return "profile";
-    }
-
-    @PostMapping("/profile")
-    public String profile(Model model) {
-        return "redirect:/user/profile";
-    }
-
     // 회원탈퇴
     @PostMapping("/delete")
     public String delete() {
         return "redirect:/";
+    }
+    
+    // 나의활동
+    @GetMapping("/mylog")
+    public String mylog() {
+        return "mylog";
     }
 
     // 좋아요한 게시글 목록
