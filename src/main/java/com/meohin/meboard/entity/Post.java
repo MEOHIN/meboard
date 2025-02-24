@@ -46,14 +46,8 @@ public class Post {
     @Column(name = "view_count", columnDefinition = "integer default 0")
     private int viewCount;
 
-    @Column(name = "like_count", columnDefinition = "integer default 0")
-    private int likeCount;
-
     @Column(name = "reply_count", columnDefinition = "integer default 0")
     private int replyCount;
-
-    @Column(name = "share_count", columnDefinition = "integer default 0")
-    private int shareCount;
 
     private int rating;
     

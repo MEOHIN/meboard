@@ -97,21 +97,5 @@ public class PostController {
         return "redirect:/post/list";
     }
 
-    @PostMapping("/{postId}/like")
-    public String like(@PathVariable("postId") Long postId) {
-        postService.likePost(postId);
-        return "redirect:/post/id";
-    }
-
-    @GetMapping("/share")
-    public String report() {
-        return "redirect:/post/id";
-    }
-    
-    @GetMapping("/reply")
-    public String comment() {
-        return "redirect:/post/id";
-    }
-    
     // TODO: paging, sort, filter, pagination; best, recnet, popular, tag, category, etc.
 }

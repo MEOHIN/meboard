@@ -41,14 +41,6 @@ public class SiteUser {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
-    @ManyToMany
-    @JoinTable(
-        name = "user_like",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "post_id")
-    )
-    private List<Post> likedPosts;
-
     @OneToMany(mappedBy = "author")
     private List<Post> posts;
 

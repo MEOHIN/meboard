@@ -145,12 +145,6 @@ public class UserController {
         return "mylog";
     }
 
-    // 좋아요한 게시글 목록
-    @GetMapping("/like")
-    public String like() {
-        return "user/like";
-    }
-
     // 작성한 댓글 목록
     @GetMapping("/reply")
     public String reply() {

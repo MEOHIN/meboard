@@ -36,9 +36,7 @@ public class PostService {
         post.setContent(content);
         post.setCreatedAt(LocalDateTime.now());
         post.setViewCount(0);
-        post.setLikeCount(0);
         post.setReplyCount(0);
-        post.setShareCount(0);
 
         postRepository.save(post);
     }
@@ -59,13 +57,5 @@ public class PostService {
         postRepository.save(post);
         
         postRepository.deleteById(postId);  
-    }
-
-    public void likePost(Long postId) {
-        Post post = postRepository.findById(postId).orElseThrow(() -> new EntityNotFoundException("게시글이 존재하지 않습니다."));
-
-        post.setLikeCount(post.getLikeCount()+1);
-
-        postRepository.save(post);
     }
 }
