@@ -27,9 +27,17 @@ public class SecurityConfig {
                         .permitAll()
             );
 
-        httpSecurity.formLogin((formLogin) -> formLogin.loginPage("/user/login").defaultSuccessUrl("/"));
-        httpSecurity.logout((logout) -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/user/logout")).logoutSuccessUrl("/").invalidateHttpSession(true));
-        
+        httpSecurity.formLogin((formLogin) -> 
+            formLogin
+                .loginPage("/login")
+                .defaultSuccessUrl("/"));
+
+        httpSecurity.logout((logout) -> 
+            logout
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login")
+                .invalidateHttpSession(true));
+
         return httpSecurity.build();
     }
 

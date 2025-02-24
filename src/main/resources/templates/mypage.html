@@ -7,7 +7,7 @@
         </div>
         
         <div class="row">
-            <form class="col s12" method="post" th:action="@{/user/mypage}" th:object="${userVO}">
+            <form class="col s12" method="post" th:action="@{/mypage}" th:object="${userVO}">
                 <div th:replace="~{form_errors :: formErrorsFragment}"></div>
                 
                 <!-- 이메일(아이디) 필드 -->
