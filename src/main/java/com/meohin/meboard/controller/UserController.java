@@ -19,13 +19,12 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
     
     // 회원가입
-    // /user/signup URL 이 GET 으로 요청되면 회원 가입을 위한 validation object인 UserVO를 렌더링
+    // /signup URL 이 GET 으로 요청되면 회원 가입을 위한 validation object인 UserVO를 렌더링
     @GetMapping("/register")
     public String register(UserVO userVO) {
         return "register";
@@ -70,7 +69,7 @@ public class UserController {
             return "register";
         }
 
-        return "redirect:/user/login";
+        return "redirect:/login";
     }
 
     // 로그인
@@ -133,7 +132,7 @@ public class UserController {
             return "mypage";
         }
 
-        return "redirect:/user/mypage";
+        return "redirect:/mypage";
     }
     // 회원탈퇴
     @PostMapping("/delete")
