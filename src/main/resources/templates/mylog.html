@@ -1,0 +1,82 @@
+<html layout:decorate="~{layout}">
+    <div layout:fragment="content" class="container">
+        <div class="row">
+            <div class="col s12">
+                <h4>나의 활동</h4>
+            </div>
+        </div>
+
+        <!-- 작성한 게시글 목록 -->
+        <div th:if="${postMessage != null and replyMessage != null}">
+            <span th:text="'활동 내역이 없습니다.'"></span>
+        </div>
+        <div th:if="${postMessage} == null or ${replyMessage} == null">
+            <div>
+                <h5>작성글</h5>
+                <div th:if="${postMessage} != null">
+                    <span th:text="${postMessage}"></span>
+                </div>
+                <div th:if="${postMessage} == null">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>번호</th>
+                                <th>제목</th>
+                                <th>작성자</th>
+                                <th>작성일</th>
+                                <th>조회수</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="post, iterStat : ${myPosts}">
+                                <td th:text="${iterStat.count}"></td>
+                                <td>
+                                    <a th:href="@{'/post/' + ${post.id}}">
+                                        <span th:text="${post.title}"></span>
+                                    </a>
+                                    <!-- 댓글 게수 표시 -->
+                                    <span th:if="${#lists.size(post.replies) > 0}" 
+                                        th:text="'[' + ${#lists.size(post.replies)} + ']'"></span>
+                                </td>
+                                <td th:text="${post.author?.nickname}"></td>
+                                <td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                <td th:text="${post.viewCount}"></td>
+                            </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 작성한 댓글 목록 -->
+            <div>
+                <h5>작성댓글</h5>
+                <div th:if="${replyMessage} != null">
+                    <span th:text="${replyMessage}"></span>
+                </div>
+                <div th:if="${replyMessage} == null">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>번호</th>
+                                <th>댓글 내용</th>
+                                <th>원글 제목</th>
+                                <th>작성일</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="reply, iterStat : ${myReplies}">
+                                <td th:text="${iterStat.count}"></td>
+                                <td th:text="${reply.content}"></td>
+                                <td>
+                                    <a th:if="${reply.post != null}" th:href="@{'/post/' + ${reply.post.id}}" 
+                                    th:text="${reply.post.title}"></a>
+                                    <span th:unless="${reply.post != null}">삭제된 게시글</span>
+                                </td>
+                                <td th:text="${#temporals.format(reply.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</html>
