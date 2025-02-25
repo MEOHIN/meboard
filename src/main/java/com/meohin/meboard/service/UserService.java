@@ -1,12 +1,17 @@
 package com.meohin.meboard.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.meohin.meboard.entity.Post;
+import com.meohin.meboard.entity.Reply;
 import com.meohin.meboard.entity.SiteUser;
+import com.meohin.meboard.repository.PostRepository;
+import com.meohin.meboard.repository.ReplyRepository;
 import com.meohin.meboard.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -16,6 +21,8 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PostRepository postRepository;
+    private final ReplyRepository replyRepository;
     private final PasswordEncoder passwordEncoder;
 
     // 사용자 조회
@@ -86,5 +93,15 @@ public class UserService {
 
         user.setPassword(passwordEncoder.encode(newPassword));
         return userRepository.save(user);
+    }
+
+    // 사용자가 작성한 게시글 목록 가져오기
+    public List<Post> getPostsByUser(SiteUser currentUser) {
+        return postRepository.findByAuthor(currentUser); // 사용자에 의해 작성된 게시글 조회
+    }
+
+    // 사용자가 작성한 댓글 목록 가져오기
+    public List<Reply> getRepliesByUser(SiteUser currentUser) {
+        return replyRepository.findByAuthor(currentUser); // 사용자에 의해 작성된 댓글 조회
     }
 }

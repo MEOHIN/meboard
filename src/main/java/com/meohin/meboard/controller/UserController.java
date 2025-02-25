@@ -1,17 +1,23 @@
 package com.meohin.meboard.controller;
 
+import java.security.Principal;
+import java.util.List;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.meohin.meboard.entity.Post;
+import com.meohin.meboard.entity.Reply;
+import com.meohin.meboard.entity.SiteUser;
 import com.meohin.meboard.service.UserService;
 import com.meohin.meboard.vo.UserVO;
 
-import ch.qos.logback.core.model.Model;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -141,13 +147,23 @@ public class UserController {
     
     // 나의활동
     @GetMapping("/mylog")
-    public String mylog() {
-        return "mylog";
-    }
+    public String mylog(Model model, Principal principal) {
+        SiteUser currentUser = userService.getUser(principal.getName());
 
-    // 작성한 댓글 목록
-    @GetMapping("/reply")
-    public String reply() {
-        return "user/reply";
+        List<Post> myPosts = userService.getPostsByUser(currentUser);
+        if (myPosts.isEmpty()) {
+            model.addAttribute("postMessage", "작성한 게시글이 없습니다.");
+        }
+
+        List<Reply> myReplies = userService.getRepliesByUser(currentUser);
+        if (myPosts.isEmpty()) {
+            model.addAttribute("replyMessage", "작성한 댓글이 없습니다.");
+
+        }
+
+        model.addAttribute("myPosts", myPosts);
+        model.addAttribute("myReplies", myReplies);
+
+        return "mylog";
     }
 }
