@@ -50,6 +50,8 @@ public class PostController {
             return "redirect:/post/list";
         }
 
+        postService.addViewCount(postId, 1);
+
         model.addAttribute("post", post.get());
         model.addAttribute("replyList", replyList);
 
