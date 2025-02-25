@@ -23,33 +23,34 @@
             <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
               <li><a th:href="@{/}">홈</a></li>
-              <li><a href="#마이페이지">마이페이지</a></li>
-              <li><a th:href="@{/user/register}">회원가입</a></li>
+              <li><a th:href="@{/mypage}">마이페이지</a></li> <!-- 마이페이지 링크에 이벤트를 추가 -->
+              <li><a th:href="@{/register}">회원가입</a></li>
               <li>
-                <a sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
-                <a sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
+                <a sec:authorize="isAnonymous()" th:href="@{/login}">로그인</a>
+                <a sec:authorize="isAuthenticated()" th:href="@{/logout}">로그아웃</a>
               </li>
 
             </ul>
           </div>
-          <div class="nav-content">
+
+          <!-- 하위 카테고리 탭 (기본적으로 숨김 처리) -->
+          <div class="nav-content" id="category-tabs" style="display: none;">
             <ul class="tabs tabs-transparent">
-              <li class="tab"><a href="#카테고리1">카테고리1</a></li>
-              <li class="tab"><a href="#카테고리2">카테고리2</a></li>
-              <li class="tab"><a href="#카테고리3">카테고리3</a></li>
-              <li class="tab"><a href="#카테고리4">카테고리4</a></li>
+              <li class="tab"><a th:href="@{/mypage}">내 정보</a></li>
+              <li class="tab"><a th:href="@{/mylog}">나의 활동</a></li>
             </ul>
           </div>
         </nav>
       
+        <!-- 모바일 사이드 네비게이션 -->
         <ul class="sidenav" id="mobile-demo">
           <li><a th:href="@{/}">홈</a></li>
-          <li><a href="#마이페이지">마이페이지</a></li>
+          <li><a th:href="@{/mypage}">마이페이지</a></li> <!-- 마이페이지 링크에 이벤트를 추가 -->
           <li>
-            <a sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
-            <a sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
+            <a sec:authorize="isAnonymous()" th:href="@{/login}">로그인</a>
+            <a sec:authorize="isAuthenticated()" th:href="@{/logout}">로그아웃</a>
           </li>
-          <li><a th:href="@{/user/register}">회원가입</a></li>
+          <li><a th:href="@{/register}">회원가입</a></li>
         </ul>
     </nav>
 
@@ -63,9 +64,17 @@
     <!-- Initialize Materialize Components -->
     <script>
       $(document).ready(function(){
-          $('.sidenav').sidenav();
+        $('.sidenav').sidenav();
+        
+        // 페이지 경로에 따라 카테고리 탭 보이기/숨기기
+        const currentPage = window.location.pathname;
+
+        if (currentPage === '/mypage' || currentPage === '/mylog') {
+            document.getElementById('category-tabs').style.display = 'block';
+        } else {
+            document.getElementById('category-tabs').style.display = 'none';
+        }
       });
     </script>
-            
 </body>
 </html>
