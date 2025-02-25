@@ -58,4 +58,11 @@ public class PostService {
         
         postRepository.deleteById(postId);  
     }
+
+    public void addViewCount(Long postId, int i) {
+        Post post = postRepository.findById(postId).orElseThrow(() -> new EntityNotFoundException("게시글이 존재하지 않습니다."));
+        post.setViewCount(post.getViewCount()+i);
+
+        postRepository.save(post);
+    }
 }
