@@ -23,7 +23,7 @@ public class SecurityConfig {
         httpSecurity.formLogin((formLogin) -> 
             formLogin
                 .loginPage("/login")
-                .defaultSuccessUrl("/"));
+                .defaultSuccessUrl("/post/list", true));    //true 파라미터는 사용자가 특정 페이지를 요청한 후 로그인했을 때도 항상 지정된 URL로 리다이렉트
 
         httpSecurity.logout((logout) -> 
             logout
