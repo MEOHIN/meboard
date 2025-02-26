@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.meohin.meboard.entity.Post;
 import com.meohin.meboard.entity.Reply;
@@ -109,18 +110,24 @@ public class UserController {
     @PostMapping("/mypage")
     public String mypage(@Valid UserVO userVO, BindingResult bindingResult, 
                         @RequestParam("action") String action,
-                        @AuthenticationPrincipal UserDetails userDetails) {
+                        Principal principal,
+                        RedirectAttributes redirectAttributes) {
         
         if (bindingResult.hasErrors()) {
             return "mypage";
         }
 
+        // 현재 로그인한 사용자 정보 확인
+        String username = principal.getName();
+        SiteUser currentUser = userService.getUser(username);
+
         try {
             switch (action) {
                 // 닉네임 수정 로직
                 case "updateNickname":
-                    userService.modifyNickname(userDetails.getUsername(), userVO.getNickname());
-                    break;
+                        userService.modifyNickname(username, userVO.getNickname());
+                        redirectAttributes.addFlashAttribute("message", "닉네임이 성공적으로 변경되었습니다.");
+                        break;
 
                 // 비밀번호 수정 로직
                 case "updatePassword":
@@ -132,7 +139,7 @@ public class UserController {
                     }
                     
                     userService.modifyPassword(
-                        userDetails.getUsername(), 
+                        currentUser, 
                         userVO.getCurrentPassword(), 
                         userVO.getPassword1()
                     );
