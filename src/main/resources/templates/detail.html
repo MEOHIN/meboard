@@ -68,9 +68,10 @@
                                 <span th:text="${nestedReply.content}"></span>
                                 <span th:text="${#temporals.format(nestedReply.createdAt, 'yyyy-MM-dd')}" class="date"></span>
                             </div>
-                            <!-- 대댓글 액션 -->
-                            <div class="reply-form">
-                                <form method="post" th:action="@{'/post' + ${post.id} + '/reply' + ${nestedReply.id} + '/delete'}">
+                            <!-- 대댓글 액션 - 작성자만 볼 수 있도록 -->
+                            <div class="reply-form" sec:authorize="isAuthenticated()" 
+                                 th:if="${nestedReply.author != null and nestedReply.author.username == #authentication.name}">
+                                <form method="post" th:action="@{'/post/' + ${post.id} + '/reply/' + ${nestedReply.id} + '/delete'}">
                                     <button type="submit">삭제</button>
                                 </form>
                             </div>
