@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.meohin.meboard.entity.Post;
+import com.meohin.meboard.entity.SiteUser;
 import com.meohin.meboard.repository.PostRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -30,13 +31,14 @@ public class PostService {
         return postRepository.findByTitleContains(keyword);
     }
 
-    public void writePost(String title, String content) {
+    public void writePost(String title, String content, SiteUser user) {
         Post post = new Post();
         post.setTitle(title);
         post.setContent(content);
         post.setCreatedAt(LocalDateTime.now());
         post.setViewCount(0);
         post.setReplyCount(0);
+        post.setAuthor(user);
 
         postRepository.save(post);
     }
