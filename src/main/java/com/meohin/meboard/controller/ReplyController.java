@@ -1,10 +1,14 @@
 package com.meohin.meboard.controller;
 
+import java.security.Principal;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.meohin.meboard.entity.SiteUser;
 import com.meohin.meboard.service.ReplyService;
+import com.meohin.meboard.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,11 +20,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class ReplyController {
     private final ReplyService replyService;
+    private final UserService userService;
 
     @PostMapping
     public String writeReply(@PathVariable Long postId,
-                            @RequestParam String content) {
-        replyService.writeReply(postId, content);
+                            @RequestParam String content,
+                            Principal principal) {
+
+        SiteUser currentUser = userService.getUser(principal.getName());
+        replyService.writeReply(postId, content, currentUser);
         return "redirect:/post/" + postId;
     }
     
