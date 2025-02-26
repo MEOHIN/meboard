@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.meohin.meboard.entity.Post;
 import com.meohin.meboard.entity.Reply;
+import com.meohin.meboard.entity.SiteUser;
 import com.meohin.meboard.repository.ReplyRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -22,7 +23,7 @@ public class ReplyService {
         return replyRepository.findByPostId(postId);
     }
 
-    public void writeReply(Long postId, String content) {
+    public void writeReply(Long postId, String content, SiteUser user) {
         Post post = new Post();
         post.setId(postId);
 
@@ -30,6 +31,7 @@ public class ReplyService {
         reply.setPost(post);
         reply.setContent(content);
         reply.setCreatedAt(LocalDateTime.now());
+        reply.setAuthor(user);
 
         replyRepository.save(reply);
     }
