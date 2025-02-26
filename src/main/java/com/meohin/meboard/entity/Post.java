@@ -24,10 +24,8 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "제목을 입력하세요.")
     private String title;
 
-    @NotEmpty(message = "내용을 입력하세요.")
     private String content;
 
     @Column(name = "created_at")
@@ -39,17 +37,11 @@ public class Post {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
-    private String category;
-
-    private String tag;
-
     @Column(name = "view_count", columnDefinition = "integer default 0")
     private int viewCount;
 
     @Column(name = "reply_count", columnDefinition = "integer default 0")
     private int replyCount;
-
-    private int rating;
     
     @ManyToOne
     @JoinColumn(name = "user_id")
