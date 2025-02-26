@@ -156,7 +156,7 @@ public class UserController {
         }
 
         List<Reply> myReplies = userService.getRepliesByUser(currentUser);
-        if (myPosts.isEmpty()) {
+        if (myReplies.isEmpty()) {
             model.addAttribute("replyMessage", "작성한 댓글이 없습니다.");
 
         }
