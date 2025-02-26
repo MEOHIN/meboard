@@ -143,6 +143,7 @@ public class UserController {
                         userVO.getCurrentPassword(), 
                         userVO.getPassword1()
                     );
+                    redirectAttributes.addFlashAttribute("message", "비밀번호가 성공적으로 변경되었습니다.");
                     break;
 
                 default:
@@ -156,6 +157,7 @@ public class UserController {
 
         return "redirect:/mypage";
     }
+
     // 회원탈퇴
     @PostMapping("/delete")
     public String delete() {
