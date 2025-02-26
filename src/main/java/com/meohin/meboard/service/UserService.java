@@ -83,8 +83,7 @@ public class UserService {
     }
 
     // 2. 비밀번호만 수정
-    public SiteUser modifyPassword(String username, String currentPassword, String newPassword) {
-        SiteUser user = getUser(username);
+    public SiteUser modifyPassword(SiteUser user, String currentPassword, String newPassword) {
         
         // 현재 비밀번호 확인
         if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
