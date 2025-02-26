@@ -91,7 +91,17 @@ public class UserController {
     
     // 회원정보
     @GetMapping("/mypage")
-    public String mypage(UserVO userVO) {
+    public String mypage(Model model, UserVO userVO, Principal principal) {
+
+        String username = principal.getName();
+        SiteUser currentUser = userService.getUser(username);
+        
+        // 사용자 정보를 담을 UserVO 객체 생성 및 초기값 설정
+        userVO.setUsername(username);
+        userVO.setNickname(currentUser.getNickname());
+        
+        model.addAttribute("userVO", userVO);
+
         return "mypage";
     }
 
