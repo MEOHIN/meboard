@@ -24,12 +24,11 @@
             <ul id="nav-mobile" class="right hide-on-med-and-down">
               <li><a th:href="@{/}">홈</a></li>
               <li><a th:href="@{/mypage}">마이페이지</a></li> <!-- 마이페이지 링크에 이벤트를 추가 -->
-              <li><a th:href="@{/register}">회원가입</a></li>
               <li>
                 <a sec:authorize="isAnonymous()" th:href="@{/login}">로그인</a>
                 <a sec:authorize="isAuthenticated()" th:href="@{/logout}">로그아웃</a>
               </li>
-
+              <li><a sec:authorize="isAnonymous()" th:href="@{/register}">회원가입</a></li>
             </ul>
           </div>
 
@@ -50,7 +49,7 @@
             <a sec:authorize="isAnonymous()" th:href="@{/login}">로그인</a>
             <a sec:authorize="isAuthenticated()" th:href="@{/logout}">로그아웃</a>
           </li>
-          <li><a th:href="@{/register}">회원가입</a></li>
+          <li><a sec:authorize="isAnonymous()" th:href="@{/register}">회원가입</a></li>
         </ul>
     </nav>
 
