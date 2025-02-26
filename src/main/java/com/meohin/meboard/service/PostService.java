@@ -67,4 +67,11 @@ public class PostService {
 
         postRepository.save(post);
     }
+
+    public void addReplyCount(Long postId, int i) {
+        Post post = postRepository.findById(postId).orElseThrow(() -> new EntityNotFoundException("게시글이 존재하지 않습니다."));
+        post.setReplyCount(post.getReplyCount()+i);
+
+        postRepository.save(post);
+    }
 }
