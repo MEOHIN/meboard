@@ -34,13 +34,14 @@
             <div class="reply-list">
                 <div th:each="reply : ${replyList}" class="reply-item">
                     <div class="reply-content">
-                        <span th:text="${reply.author?.nickname}" class="author"></span>
+                        <span th:text="${reply.author.nickname}" class="author"></span>
                         <span th:text="${reply.content}"></span>
                         <span th:text="${#temporals.format(reply.createdAt, 'yyyy-MM-dd HH:mm')}" class="date"></span>
                     </div>
                     
                     <!-- 댓글 폼 (수정용) -->
-                    <div class="reply-form">
+                    <div class="reply-form" sec:authorize="isAuthenticated()" 
+                         th:if="${reply.author != null and reply.author.username == #authentication.name}">
                         <form method="post" th:action="@{'/post/' + ${post.id} + '/reply/' + ${reply.id} + '/modify'}">
                             <!-- 수정하려는 댓글의 기존 내용을 폼에 미리 채웁니다 -->
                             <input type="text" name="content" th:value="${reply.content}" placeholder="댓글을 수정하세요" />
@@ -76,8 +77,9 @@
                         </div>
                     </div>
                     
-                    <!-- 댓글 액션 -->
-                    <div class="reply-actions">                 
+                    <!-- 댓글 액션 - 작성자만 볼 수 있도록 -->
+                    <div class="reply-actions" sec:authorize="isAuthenticated()" 
+                         th:if="${reply.author != null and reply.author.username == #authentication.name}">                 
                         <form method="post" th:action="@{'/post/' + ${post.id} + '/reply/' + ${reply.id} + '/delete'}">
                             <button type="submit">삭제</button>
                         </form>
