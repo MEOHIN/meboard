@@ -1,13 +1,13 @@
 <html layout:decorate="~{layout}">
     <div layout:fragment="content" class="rootContainer">
         <div class="mainContainer">
-            <div class="post-controls">
-                <a th:href="@{'/post/' + ${post.id} + '/modify'}">수정</a>
+            <div th:if="${post.author.username == #authentication.name}"  class="post-controls">
+                <a th:href="@{'/post/' + ${post.id} + '/modify'}">수정</a>             
                 <form method="post" th:action="@{'/post/' + ${post.id} + '/delete'}">
                     <input type="submit" value="삭제">
                 </form>
-                <a th:href="@{'/post/list'}">목록</a>
             </div>
+            <a th:href="@{'/post/list'}">목록</a>
 
             <!-- 게시판 데이터 -->
             <div class="post-metadata">
