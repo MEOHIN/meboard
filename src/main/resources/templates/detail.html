@@ -33,31 +33,61 @@
             <!-- 댓글 목록 -->
             <div class="reply-list">
                 <div th:each="reply : ${replyList}" class="reply-item">
-                    <div class="reply-content">
+                    <div class="reply-content" th:id="'reply-content-' + ${reply.id}">  <!-- 댓글의 고유 ID를 사용하여 동적으로 생성 -->
                         <span th:text="${reply.author.nickname}" class="author"></span>
-                        <span th:text="${reply.content}"></span>
+                        <span th:text="${reply.content}" th:id="'reply-text-' + ${reply.id}"></span>    <!-- 댓글의 고유 ID를 사용하여 동적으로 생성 -->
                         <span th:text="${#temporals.format(reply.createdAt, 'yyyy-MM-dd HH:mm')}" class="date"></span>
                     </div>
                     
-                    <!-- 댓글 폼 (수정용) -->
-                    <div class="reply-form" sec:authorize="isAuthenticated()" 
-                         th:if="${reply.author != null and reply.author.username == #authentication.name}">
+                    <!-- 댓글 폼 (수정용) - 처음에는 숨겨져 있음 -->
+                    <div class="reply-edit-form" sec:authorize="isAuthenticated()" 
+                         th:if="${reply.author != null and reply.author.username == #authentication.name}"
+                         th:id="'reply-edit-form-' + ${reply.id}" style="display: none;">   <!-- 댓글의 고유 ID를 사용하여 동적으로 생성 -->
                         <form method="post" th:action="@{'/post/' + ${post.id} + '/reply/' + ${reply.id} + '/modify'}">
-                            <!-- 수정하려는 댓글의 기존 내용을 폼에 미리 채웁니다 -->
-                            <input type="text" name="content" th:value="${reply.content}" placeholder="댓글을 수정하세요" />
-                            <input type="submit" value="수정">
+                            <textarea name="content" th:text="${reply.content}" class="materialize-textarea"></textarea>
+                            <div class="form-actions">
+                                <button type="button" 
+                                        th:onclick="'cancelEdit(' + ${reply.id} + ')'">취소</button>    <!-- 취소 버튼에 type="button" 속성을 추가하여 폼 제출이 되지 않도록 하고, 이벤트 핸들러 추가-->
+                                <button type="submit">저장</button>
+                            </div>
                         </form>
                     </div>
                     
                     <!-- 댓글 액션 - 작성자만 볼 수 있도록 -->
                     <div class="reply-actions" sec:authorize="isAuthenticated()" 
-                         th:if="${reply.author != null and reply.author.username == #authentication.name}">                 
-                        <form method="post" th:action="@{'/post/' + ${post.id} + '/reply/' + ${reply.id} + '/delete'}">
-                            <button type="submit">삭제</button>
+                         th:if="${reply.author != null and reply.author.username == #authentication.name}" 
+                         th:id="'reply-actions-' + ${reply.id}">    <!-- 댓글의 고유 ID를 사용하여 동적으로 생성 -->
+                        <button type="submit">삭제</button>
+                        <button 
+                                th:onclick="'showEditForm(' + ${reply.id} + ')'">수정</button>  <!-- 수정 버튼에 클릭 이벤트 핸들러 추가 -->
+                        <form method="post" th:action="@{'/post/' + ${post.id} + '/reply/' + ${reply.id} + '/delete'}" style="display: inline;">
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+        
+        <!-- 댓글 수정 관련 자바스크립트 -->
+        <script>
+            function showEditForm(replyId) {
+                // 댓글 내용 숨기기
+                document.getElementById('reply-content-' + replyId).style.display = 'none';
+                // 액션 버튼 숨기기
+                document.getElementById('reply-actions-' + replyId).style.display = 'none';
+                // 수정 폼 표시하기
+                document.getElementById('reply-edit-form-' + replyId).style.display = 'block';
+                // 텍스트 영역 자동 조절 초기화 (Materialize 기능)
+                M.textareaAutoResize(document.querySelector('#reply-edit-form-' + replyId + ' textarea'));
+            }
+            
+            function cancelEdit(replyId) {
+                // 수정 폼 숨기기
+                document.getElementById('reply-edit-form-' + replyId).style.display = 'none';
+                // 댓글 내용 다시 표시
+                document.getElementById('reply-content-' + replyId).style.display = 'block';
+                // 액션 버튼 다시 표시
+                document.getElementById('reply-actions-' + replyId).style.display = 'block';
+            }
+        </script>
     </div>
 </html>
