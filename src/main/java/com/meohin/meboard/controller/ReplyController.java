@@ -31,17 +31,6 @@ public class ReplyController {
         replyService.writeReply(postId, content, currentUser);
         return "redirect:/post/" + postId;
     }
-    
-    @PostMapping("/{replyId}/reply")
-    public String writeNestedReply(@PathVariable Long postId,
-                                @PathVariable Long replyId,
-                                @RequestParam String content,
-                                Principal principal) {
-    
-        SiteUser user = userService.getUser(principal.getName());
-        replyService.writeNestedReply(replyId, content, user);
-        return "redirect:/post/" + postId;
-    }
 
     @PostMapping("/{replyId}/modify")
     public String modifyReply(@PathVariable Long postId,
