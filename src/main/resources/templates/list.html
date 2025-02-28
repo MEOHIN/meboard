@@ -9,14 +9,14 @@
                     <input id="search" type="search" name="keyword" placeholder="검색어를 입력하세요" required>
                     <label class="label-icon" for="search"><i class="material-icons">search</i></label>
                     <!-- TODO: 검색버튼 숨기기 -->
-                    <input type="submit" value="검색">
+                    <input type="submit" value="검색" style="display: none;">
                     <i class="material-icons">close</i>
                 </div>
             </form>
         </div>
         <!-- 새 게시글 등록 -->
         <div>
-            <a th:href="@{/post/write}">글쓰기</a>
+            <a th:href="@{/post/write}" class="waves-effect waves-light btn"><i class="material-icons left">create</i>글쓰기</a>
         </div>
         <!-- 게시글 목록 -->
         <div class="mainContainer">

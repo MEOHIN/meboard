@@ -1,13 +1,15 @@
 <html layout:decorate="~{layout}">
     <div layout:fragment="content" class="rootContainer">
         <div class="mainContainer">
-            <div th:if="${post.author.username == #authentication.name}"  class="post-controls">
-                <a th:href="@{'/post/' + ${post.id} + '/modify'}">수정</a>             
-                <form method="post" th:action="@{'/post/' + ${post.id} + '/delete'}">
-                    <input type="submit" value="삭제">
-                </form>
+            <div class="button-group">
+                <a th:href="@{'/post/list'}" class="waves-effect waves-light btn-small">목록</a>
+                <div th:if="${post.author.username == #authentication.name}"  class="post-controls">
+                    <a th:href="@{'/post/' + ${post.id} + '/modify'}" class="waves-effect waves-light btn-small">수정</a>             
+                    <form method="post" th:action="@{'/post/' + ${post.id} + '/delete'}">
+                        <button type="submit" class="btn-small waves-effect waves-light grey">삭제</button>
+                    </form>
+                </div>
             </div>
-            <a th:href="@{'/post/list'}">목록</a>
 
             <!-- 게시판 데이터 -->
             <div class="post-metadata">
@@ -26,7 +28,7 @@
             <div class="reply-form">
                 <form method="post" th:action="@{'/post/' + ${post.id} + '/reply'}" >
                     <textarea name="content" placeholder="댓글을 입력하세요."></textarea>
-                    <input type="submit" value="등록">
+                    <button class="btn-small waves-effect waves-light" type="submit" name="action">등록</button>
                 </form>
             </div>
 
@@ -46,9 +48,9 @@
                         <form method="post" th:action="@{'/post/' + ${post.id} + '/reply/' + ${reply.id} + '/modify'}">
                             <textarea name="content" th:text="${reply.content}" class="materialize-textarea"></textarea>
                             <div class="form-actions">
-                                <button type="button" 
+                                <button type="button" class="btn-small waves-effect waves-light grey" 
                                         th:onclick="'cancelEdit(' + ${reply.id} + ')'">취소</button>    <!-- 취소 버튼에 type="button" 속성을 추가하여 폼 제출이 되지 않도록 하고, 이벤트 핸들러 추가-->
-                                <button type="submit">저장</button>
+                                <button type="submit" class="btn-small waves-effect waves-light">저장</button>
                             </div>
                         </form>
                     </div>
@@ -57,8 +59,8 @@
                     <div class="reply-actions" sec:authorize="isAuthenticated()" 
                          th:if="${reply.author != null and reply.author.username == #authentication.name}" 
                          th:id="'reply-actions-' + ${reply.id}">    <!-- 댓글의 고유 ID를 사용하여 동적으로 생성 -->
-                        <button type="submit">삭제</button>
-                        <button 
+                        <button type="submit" class="btn-small waves-effect waves-light grey">삭제</button>
+                        <button class="btn-small waves-effect waves-light" 
                                 th:onclick="'showEditForm(' + ${reply.id} + ')'">수정</button>  <!-- 수정 버튼에 클릭 이벤트 핸들러 추가 -->
                         <form method="post" th:action="@{'/post/' + ${post.id} + '/reply/' + ${reply.id} + '/delete'}" style="display: inline;">
                         </form>

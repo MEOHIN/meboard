@@ -11,9 +11,11 @@
                     <label for="password">비밀번호</label>
                     <input type="password" name="password" id="password">
                 </div>
-                <button type="submit">로그인</button>
+                <div class="button-group">
+                    <button type="submit" class="waves-effect waves-light btn" name="action">로그인</button>
+                    <a th:href="@{/register}" class="waves-effect waves-light btn">회원가입</a>
+                </div>
             </form>
-            <a th:href="@{/register}">회원가입</a>
         </div>
     </div>
 </html>
