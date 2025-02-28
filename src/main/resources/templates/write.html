@@ -1,7 +1,7 @@
 <html layout:decorate="~{layout}">
     <div layout:fragment="content" class="rootContainer">
         <div class="mainContainer">
-            <form method="post" th:object="${post}">
+            <form method="post" th:object="${postVO}">
                 <div>
                     <label for="title">제목</label>
                     <input type="text" id="title" name="title" />
